@@ -8,7 +8,16 @@ class UploadTuitionProfile extends StatefulWidget {
 }
 
 class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
+  final TextEditingController _tuitionCategoryController =
+      TextEditingController(text: 'Select Tuition Category');
+  final TextEditingController _tuitionTitleController = TextEditingController();
+  final TextEditingController _tuitionDescriptionController =
+      TextEditingController();
+  final TextEditingController _tuitionAvailabilityController =
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  bool _isLoading = false;
 
   Widget _textTitles({required String label}) {
     return Padding(
@@ -19,6 +28,53 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
           color: Colors.black,
           fontSize: 20,
           fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _textFormFields({
+    required String valueKey,
+    required TextEditingController controller,
+    required bool enabled,
+    required Function fct,
+    required int maxLength,
+  }) {
+    return Padding(
+      padding: EdgeInsets.all(5.0),
+      child: InkWell(
+        onTap: () {
+          fct();
+        },
+        child: TextFormField(
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Value is missing';
+            }
+            return null;
+          },
+          controller: controller,
+          enabled: enabled,
+          key: ValueKey(valueKey),
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+          maxLines: valueKey == 'TuitionDescription' ? 3 : 1,
+          maxLength: maxLength,
+          keyboardType: TextInputType.text,
+          decoration: const InputDecoration(
+            filled: true,
+            fillColor: Colors.black54,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
         ),
       ),
     );
@@ -56,7 +112,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
         ),
         body: Center(
           child: Padding(
-            padding: EdgeInsets.all(7.0),
+            padding: const EdgeInsets.all(7.0),
             child: Card(
               color: Colors.white10,
               child: SingleChildScrollView(
@@ -94,8 +150,79 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _textTitles(label: 'Tuition Category : '),
+                            _textFormFields(
+                              valueKey: 'TuitionCategory',
+                              controller: _tuitionCategoryController,
+                              enabled: false,
+                              fct: () {},
+                              maxLength: 100,
+                            ),
+                            _textTitles(label: "Tuition title"),
+                            _textFormFields(
+                              valueKey: 'TuitionTitle',
+                              controller: _tuitionTitleController,
+                              enabled: true,
+                              fct: () {},
+                              maxLength: 100,
+                            ),
+                            _textTitles(label: "Tuition Description"),
+                            _textFormFields(
+                              valueKey: 'TuitionDescription',
+                              controller: _tuitionDescriptionController,
+                              enabled: true,
+                              fct: () {},
+                              maxLength: 100,
+                            ),
+                            _textTitles(
+                                label: "Approximate Availability(Upto)"),
+                            _textFormFields(
+                              valueKey: 'TuitionAvailability',
+                              controller: _tuitionAvailabilityController,
+                              enabled: true,
+                              fct: () {},
+                              maxLength: 100,
+                            ),
                           ],
                         ),
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: _isLoading
+                            ? const CircularProgressIndicator()
+                            : MaterialButton(
+                                onPressed: () {},
+                                color: Colors.black,
+                                elevation: 8,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Post Now',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 9,
+                                      ),
+                                      Icon(
+                                        Icons.upload_file,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                       ),
                     ),
                   ],
