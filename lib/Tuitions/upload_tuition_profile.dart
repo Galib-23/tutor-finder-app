@@ -1,9 +1,14 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tutor_finder/Persistent/persistent.dart';
+import 'package:tutor_finder/Services/global_methods.dart';
+import 'package:uuid/uuid.dart';
 
+import '../Services/global_variables.dart';
 import '../Widgets/bottom_nav_bar.dart';
 
 class UploadTuitionProfile extends StatefulWidget {
@@ -173,6 +178,71 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
     }
   }
 
+  void _uploadTuition() async {
+    final tuitionId = const Uuid().v4();
+    User? user = FirebaseAuth.instance.currentUser;
+    final _uid = user!.uid;
+    final isValid = _formKey.currentState!.validate();
+
+    if (isValid) {
+      if (_tuitionAvailabilityController.text ==
+              'Choose Tuition Availability' ||
+          _tuitionCategoryController.text == 'Choose Tuition Category') {
+        GlobalMethod.showErrorDialog(
+            error: 'Please Pick Everything', ctx: context);
+        return;
+      }
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        await FirebaseFirestore.instance
+            .collection('tuitions')
+            .doc(tuitionId)
+            .set({
+          'tuitionId': tuitionId,
+          'uploadedBy': _uid,
+          'email': user.email,
+          'subject': _tuitionTitleController.text,
+          'tuitionDescription': _tuitionDescriptionController.text,
+          'availability': _tuitionAvailabilityController.text,
+          'deadlineDateTimeStamp': deadlineDateTimeStamp,
+          'tuitionCategory': _tuitionCategoryController.text,
+          'tuitionComments': [],
+          'hiring': true,
+          'createdAt': Timestamp.now(),
+          'name': name,
+          'userImage': userImage,
+          'location': location,
+          'hiredBy': 0,
+        });
+        await Fluttertoast.showToast(
+          msg: 'Tuition has been Posted ',
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 18.0,
+        );
+        _tuitionTitleController.clear();
+        _tuitionDescriptionController.clear();
+        setState(() {
+          _tuitionCategoryController.text = 'Choose Tuition Category';
+          _tuitionAvailabilityController.text = 'Choose An Availability period';
+        });
+      } catch (error) {
+        setState(() {
+          _isLoading = false;
+        });
+        GlobalMethod.showErrorDialog(error: error.toString(), ctx: context);
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      print('Its not valid');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -276,7 +346,9 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                         child: _isLoading
                             ? const CircularProgressIndicator()
                             : MaterialButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _uploadTuition();
+                                },
                                 color: Colors.black,
                                 elevation: 8,
                                 shape: RoundedRectangleBorder(
