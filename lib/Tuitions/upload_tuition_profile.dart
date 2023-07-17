@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutor_finder/Persistent/persistent.dart';
 
 import '../Widgets/bottom_nav_bar.dart';
 
@@ -80,8 +81,76 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
     );
   }
 
+  _showTuitionCategoriesDialog({required Size size}) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            backgroundColor: Colors.black54,
+            title: const Text(
+              'Tuition Category',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+            content: Container(
+              width: size.width * 0.9,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: Persistent.tuitionCategoryList.length,
+                  itemBuilder: (ctx, index) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          _tuitionCategoryController.text =
+                              Persistent.tuitionCategoryList[index];
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.arrow_right_alt_outlined,
+                            color: Colors.grey,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              Persistent.tuitionCategoryList[index],
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.canPop(context) ? Navigator.pop(context) : null;
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -96,23 +165,9 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
           indexNum: 2,
         ),
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          title: const Text('UploadTuitionNow'),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.deepOrange.shade300, Colors.blueAccent],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                stops: const [0.2, 0.9],
-              ),
-            ),
-          ),
-        ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(7.0),
+            padding: const EdgeInsets.all(8.0),
             child: Card(
               color: Colors.white10,
               child: SingleChildScrollView(
@@ -120,7 +175,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     const Align(
                       alignment: Alignment.center,
@@ -154,12 +209,14 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                               valueKey: 'TuitionCategory',
                               controller: _tuitionCategoryController,
                               enabled: false,
-                              fct: () {},
+                              fct: () {
+                                _showTuitionCategoriesDialog(size: size);
+                              },
                               maxLength: 100,
                             ),
-                            _textTitles(label: "Tuition title"),
+                            _textTitles(label: "Subject/Sujects"),
                             _textFormFields(
-                              valueKey: 'TuitionTitle',
+                              valueKey: 'Subject',
                               controller: _tuitionTitleController,
                               enabled: true,
                               fct: () {},
