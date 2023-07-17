@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor_finder/Persistent/persistent.dart';
 
@@ -15,8 +18,11 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
   final TextEditingController _tuitionDescriptionController =
       TextEditingController();
   final TextEditingController _tuitionAvailabilityController =
-      TextEditingController();
+      TextEditingController(text: 'Tuition Availability');
   final _formKey = GlobalKey<FormState>();
+
+  DateTime? picked;
+  Timestamp? deadlineDateTimeStamp;
 
   bool _isLoading = false;
 
@@ -148,6 +154,25 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
         });
   }
 
+  void _pickDateDialog() async {
+    picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(
+        const Duration(days: 0),
+      ),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        _tuitionAvailabilityController.text =
+            '${picked!.year} - ${picked!.month} - ${picked!.day}';
+        deadlineDateTimeStamp = Timestamp.fromMicrosecondsSinceEpoch(
+            picked!.microsecondsSinceEpoch);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -235,8 +260,10 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                             _textFormFields(
                               valueKey: 'TuitionAvailability',
                               controller: _tuitionAvailabilityController,
-                              enabled: true,
-                              fct: () {},
+                              enabled: false,
+                              fct: () {
+                                _pickDateDialog();
+                              },
                               maxLength: 100,
                             ),
                           ],
