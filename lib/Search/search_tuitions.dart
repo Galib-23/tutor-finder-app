@@ -13,7 +13,7 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(255, 184, 218, 241),
+            Color.fromARGB(255, 255, 255, 255),
             Color.fromARGB(255, 255, 255, 255)
           ],
           begin: Alignment.centerLeft,
