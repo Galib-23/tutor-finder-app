@@ -10,12 +10,15 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.deepOrange.shade300, Colors.blueAccent],
+          colors: [
+            Color.fromARGB(255, 184, 218, 241),
+            Color.fromARGB(255, 255, 255, 255)
+          ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [0.2, 0.9],
+          stops: [0.2, 0.9],
         ),
       ),
       child: Scaffold(
@@ -27,12 +30,15 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
           title: const Text('AllStudentsScreen'),
           centerTitle: true,
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.deepOrange.shade300, Colors.blueAccent],
+                colors: [
+                  Color.fromARGB(255, 101, 255, 255),
+                  Color.fromARGB(255, 57, 128, 250)
+                ],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                stops: const [0.2, 0.9],
+                stops: [0.2, 0.9],
               ),
             ),
           ),

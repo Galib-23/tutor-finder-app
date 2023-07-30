@@ -29,6 +29,14 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
 
   bool _isLoading = false;
 
+  void dispose() {
+    super.dispose();
+    _tuitionCategoryController.dispose();
+    _tuitionTitleController.dispose();
+    _tuitionDescriptionController.dispose();
+    _tuitionAvailabilityController.dispose();
+  }
+
   Widget _textTitles({required String label}) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -245,12 +253,15 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.deepOrange.shade300, Colors.blueAccent],
+          colors: [
+            Color.fromARGB(255, 184, 218, 241),
+            Color.fromARGB(255, 255, 255, 255)
+          ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [0.2, 0.9],
+          stops: [0.2, 0.9],
         ),
       ),
       child: Scaffold(
@@ -262,7 +273,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
-              color: Colors.white10,
+              color: const Color.fromARGB(255, 159, 201, 255),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,7 +358,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                                 onPressed: () {
                                   _uploadTuition();
                                 },
-                                color: Colors.black,
+                                color: const Color.fromARGB(255, 46, 59, 243),
                                 elevation: 8,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13),
