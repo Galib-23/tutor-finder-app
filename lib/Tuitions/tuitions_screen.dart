@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tutor_finder/Search/search_single_tuitions.dart';
 import 'package:tutor_finder/Widgets/bottom_nav_bar.dart';
 
 import '../Persistent/persistent.dart';
@@ -142,11 +143,14 @@ class _TuitionScreenState extends State<TuitionScreen> {
           ),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.search_outlined,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (c) => SearchScreen()));
+              },
             ),
           ],
         ),
