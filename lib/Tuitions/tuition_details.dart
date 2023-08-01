@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tutor_finder/Services/global_methods.dart';
+import 'package:tutor_finder/Services/global_variables.dart';
 import 'package:tutor_finder/Tuitions/tuitions_screen.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:uuid/uuid.dart';
 
 class TuitionDetailsScreen extends StatefulWidget {
   final String uploadedBy;
@@ -21,6 +24,9 @@ class TuitionDetailsScreen extends StatefulWidget {
 class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  final TextEditingController _commentController = TextEditingController();
+  bool _isCommenting = false;
+
   String? authorName;
   String? userImageUrl;
   String? tuitionCategory;
@@ -35,6 +41,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
   String? email = '';
   int hiredBy = 0;
   bool isDeadlineAvailable = false;
+  bool showComment = false;
 
   void getTuitionData() async {
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -515,8 +522,177 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4.0),
-                child: Card(),
+                padding: const EdgeInsets.all(4.0),
+                child: Card(
+                  color: Colors.black,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AnimatedSwitcher(
+                          duration: const Duration(
+                            milliseconds: 500,
+                          ),
+                          child: _isCommenting
+                              ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Flexible(
+                                      flex: 3,
+                                      child: TextField(
+                                        controller: _commentController,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        maxLength: 200,
+                                        keyboardType: TextInputType.text,
+                                        maxLines: 6,
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.pink),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                            child: MaterialButton(
+                                              onPressed: () async {
+                                                if (_commentController
+                                                        .text.length <
+                                                    7) {
+                                                  GlobalMethod.showErrorDialog(
+                                                    error:
+                                                        'Comment cannot be Less than 7 Characters',
+                                                    ctx: context,
+                                                  );
+                                                } else {
+                                                  final _generatedId =
+                                                      const Uuid().v4();
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('tuitions')
+                                                      .doc(widget.tuitionId)
+                                                      .update({
+                                                    'tuitionComments':
+                                                        FieldValue.arrayUnion([
+                                                      {
+                                                        'userId': FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid,
+                                                        'commentId':
+                                                            _generatedId,
+                                                        'name': name,
+                                                        'userImageUrl':
+                                                            userImage,
+                                                        'commentBody':
+                                                            _commentController
+                                                                .text,
+                                                        'time': Timestamp.now(),
+                                                      }
+                                                    ]),
+                                                  });
+                                                  await Fluttertoast.showToast(
+                                                    msg:
+                                                        'Your comment has been added',
+                                                    toastLength:
+                                                        Toast.LENGTH_LONG,
+                                                    backgroundColor:
+                                                        Colors.grey,
+                                                    fontSize: 18.0,
+                                                  );
+                                                  _commentController.clear();
+                                                }
+                                                setState(() {
+                                                  showComment = true;
+                                                });
+                                              },
+                                              color: Colors.blueAccent,
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: const Text(
+                                                'Post',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                _isCommenting = !_isCommenting;
+                                                showComment = false;
+                                              });
+                                            },
+                                            child: const Text(
+                                              'Cancel',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _isCommenting = !_isCommenting;
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.add_comment,
+                                        color: Colors.blueAccent,
+                                        size: 40,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showComment = false;
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down_circle,
+                                        color: Colors.blueAccent,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
