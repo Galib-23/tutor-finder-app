@@ -148,7 +148,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Card(
-                  color: Color.fromARGB(255, 106, 227, 248),
+                  color: Color.fromARGB(255, 255, 255, 255),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -160,7 +160,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                             subject == null ? '' : subject!,
                             maxLines: 3,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 0, 0, 0),
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                             ),
@@ -201,7 +201,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 0, 0, 0),
                                     ),
                                   ),
                                   const SizedBox(
@@ -210,7 +210,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                   Text(
                                     location!,
                                     style: const TextStyle(
-                                      color: Colors.grey,
+                                      color: Color.fromARGB(255, 105, 105, 105),
                                     ),
                                   ),
                                 ],
@@ -222,30 +222,30 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              hiredBy.toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            const Icon(
+                              Icons.how_to_reg_sharp,
+                              color: Color.fromARGB(255, 105, 105, 105),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Text(
+                              'Hired By : ',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 105, 105, 105),
                               ),
                             ),
                             const SizedBox(
                               width: 6,
                             ),
-                            const Text(
-                              'Hired By',
-                              style: TextStyle(
-                                color: Colors.grey,
+                            Text(
+                              hiredBy.toString(),
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Icon(
-                              Icons.how_to_reg_sharp,
-                              color: Colors.grey,
-                            )
                           ],
                         ),
                         FirebaseAuth.instance.currentUser!.uid !=
@@ -256,10 +256,10 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                 children: [
                                   dividerWidget(),
                                   const Text(
-                                    'Hiring',
+                                    'Hiring : ',
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 0, 0, 0),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -313,10 +313,178 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                           color: Colors.green,
                                         ),
                                       ),
+                                      const SizedBox(
+                                        width: 40,
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          User? user = _auth.currentUser;
+                                          final _uid = user!.uid;
+                                          if (_uid == widget.uploadedBy) {
+                                            try {
+                                              // ignore: avoid_single_cascade_in_expression_statements
+                                              FirebaseFirestore.instance
+                                                  .collection('tuitions')
+                                                ..doc(widget.tuitionId)
+                                                    .update({'hiring': false});
+                                            } catch (error) {
+                                              GlobalMethod.showErrorDialog(
+                                                error:
+                                                    'Action cannot be performed ',
+                                                ctx: context,
+                                              );
+                                            }
+                                          } else {
+                                            GlobalMethod.showErrorDialog(
+                                              error:
+                                                  'You Cannot Perform This Action',
+                                              ctx: context,
+                                            );
+                                          }
+                                          getTuitionData();
+                                        },
+                                        child: const Text(
+                                          'OFF',
+                                          style: TextStyle(
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                      Opacity(
+                                        opacity: hiring == false ? 1 : 0,
+                                        child: const Icon(
+                                          Icons.check_box,
+                                          color: Colors.red,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
                               ),
+                        dividerWidget(),
+                        const Text(
+                          'Tuition Description',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          tuitionDescription == null ? '' : tuitionDescription!,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        //dividerWidget(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Card(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Center(
+                          child: Text(
+                            isDeadlineAvailable
+                                ? 'Actively Accepting Tuition Request'
+                                : 'Currently Not Recieving Tuition Request',
+                            style: TextStyle(
+                              color: isDeadlineAvailable
+                                  ? Colors.green
+                                  : Colors.red,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Center(
+                          child: MaterialButton(
+                            onPressed: () {},
+                            color: Colors.blueAccent,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(13),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14),
+                              child: Text(
+                                'Hire Now',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        dividerWidget(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Uploaded On : ',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              postedDate == null ? '' : postedDate!,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Available Upto : ',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              deadlineDate == null ? '' : deadlineDate!,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
