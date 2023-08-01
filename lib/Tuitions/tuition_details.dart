@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor_finder/Services/global_methods.dart';
 import 'package:tutor_finder/Tuitions/tuitions_screen.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TuitionDetailsScreen extends StatefulWidget {
   final String uploadedBy;
@@ -97,6 +98,26 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
         ),
       ],
     );
+  }
+
+  hireTutor() {
+    final Uri params = Uri(
+        scheme: 'mailto',
+        path: email,
+        query:
+            'subject=Inquiry Regarding Tutoring Services&body=I am eager to commence our tutoring sessions and gain valuable knowledge from your expertise. Please let me know when you are available for a brief consultation or if there is a convenient time for us to connect and Please send me your contacts.');
+    final url = params.toString();
+    launchUrlString(url);
+    addNewHirers();
+  }
+
+  void addNewHirers() async {
+    var docRef =
+        FirebaseFirestore.instance.collection('tuitions').doc(widget.tuitionId);
+    docRef.update({
+      'hiredBy': hiredBy + 1,
+    });
+    Navigator.pop(context);
   }
 
   @override
@@ -230,7 +251,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                               width: 10,
                             ),
                             const Text(
-                              'Hired By : ',
+                              'Tuition Requests Recieved : ',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 105, 105, 105),
                               ),
@@ -424,7 +445,9 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                         ),
                         Center(
                           child: MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              hireTutor();
+                            },
                             color: Colors.blueAccent,
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -485,10 +508,15 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                             ),
                           ],
                         ),
+                        dividerWidget(),
                       ],
                     ),
                   ),
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(4.0),
+                child: Card(),
               ),
             ],
           ),
