@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tutor_finder/Services/global_methods.dart';
+import 'package:tutor_finder/Tuitions/tuition_details.dart';
 
 class TuitionWidget extends StatefulWidget {
   final String subject;
@@ -93,7 +94,15 @@ class _TuitionWidgetState extends State<TuitionWidget> {
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => TuitionDetailsScreen(
+                        uploadedBy: widget.uploadedBy,
+                        tuitionId: widget.tuitionId,
+                      )));
+        },
         onLongPress: () {
           _deleteDialog();
         },
