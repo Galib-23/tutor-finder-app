@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor_finder/Search/search_single_tuitions.dart';
 import 'package:tutor_finder/Widgets/bottom_nav_bar.dart';
+import 'package:tutor_finder/Widgets/tuition_widget.dart';
 
 import '../Persistent/persistent.dart';
 
@@ -114,47 +116,91 @@ class _TuitionScreenState extends State<TuitionScreen> {
         ),
       ),
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBarForApp(
-          indexNum: 0,
-        ),
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 101, 255, 255),
-                  Color.fromARGB(255, 57, 128, 250)
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                stops: [0.2, 0.9],
+          bottomNavigationBar: BottomNavigationBarForApp(
+            indexNum: 0,
+          ),
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 101, 255, 255),
+                    Color.fromARGB(255, 57, 128, 250)
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  stops: [0.2, 0.9],
+                ),
               ),
             ),
-          ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.filter_list_rounded,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              _showTuitionCategoriesDialog(size: size);
-            },
-          ),
-          actions: [
-            IconButton(
+            automaticallyImplyLeading: false,
+            leading: IconButton(
               icon: const Icon(
-                Icons.search_outlined,
+                Icons.filter_list_rounded,
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (c) => SearchScreen()));
+                _showTuitionCategoriesDialog(size: size);
               },
             ),
-          ],
-        ),
-      ),
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.search_outlined,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (c) => SearchScreen()));
+                },
+              ),
+            ],
+          ),
+          body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection('tuitions')
+                  .where('tuitionCategory', isEqualTo: tuitionCategoryFilter)
+                  .where('hiring', isEqualTo: true)
+                  .orderBy('createdAt', descending: false)
+                  .snapshots(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.data?.docs.isNotEmpty == true) {
+                    return ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return TuitionWidget(
+                            subject: snapshot.data?.docs[index]['subject'],
+                            tuitionDescription: snapshot.data?.docs[index]
+                                ['tuitionDescription'],
+                            tuitionId: snapshot.data?.docs[index]['tuitionId'],
+                            uploadedBy: snapshot.data?.docs[index]
+                                ['uploadedBy'],
+                            userImage: snapshot.data?.docs[index]['userImage'],
+                            name: snapshot.data?.docs[index]['name'],
+                            hiring: snapshot.data?.docs[index]['hiring'],
+                            email: snapshot.data?.docs[index]['email'],
+                            location: snapshot.data?.docs[index]['location'],
+                          );
+                        });
+                  } else {
+                    return const Center(
+                      child: Text('There is No Tuitions Available'),
+                    );
+                  }
+                }
+                return const Center(
+                  child: Text(
+                    'Something Went Wrong',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                );
+              })),
     );
   }
 }
