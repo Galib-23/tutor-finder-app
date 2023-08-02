@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tutor_finder/user_state.dart';
 
 import '../Widgets/bottom_nav_bar.dart';
 
@@ -69,13 +70,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Icon(
           icon,
-          color: Colors.white,
+          color: Colors.black54,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             content,
-            style: const TextStyle(color: Colors.white54),
+            style: const TextStyle(color: Colors.black54),
           ),
         ),
       ],
@@ -114,8 +115,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Stack(
                       children: [
                         Card(
-                          color: Colors.white10,
-                          margin: const EdgeInsets.all(30),
+                          color: Colors.white,
+                          margin: const EdgeInsets.all(30.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -132,8 +133,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Text(
                                     name == null ? 'Name here' : name!,
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 24.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -142,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 const Divider(
                                   thickness: 1,
-                                  color: Colors.white,
+                                  color: Colors.grey,
                                 ),
                                 const SizedBox(
                                   height: 30,
@@ -152,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Text(
                                     'Account Information : ',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 22.0,
                                     ),
                                   ),
@@ -165,6 +167,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: userInfo(
                                       icon: Icons.email, content: email),
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10),
                                   child: userInfo(
@@ -175,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 const Divider(
                                   thickness: 1,
-                                  color: Colors.white,
+                                  color: Colors.grey,
                                 ),
                                 const SizedBox(
                                   height: 25,
@@ -187,8 +192,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding:
                                               const EdgeInsets.only(bottom: 30),
                                           child: MaterialButton(
-                                            onPressed: () {},
-                                            color: Colors.black,
+                                            onPressed: () {
+                                              _auth.signOut();
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserState(),
+                                                  ));
+                                            },
+                                            color: Colors.blueAccent,
                                             elevation: 8,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
