@@ -525,7 +525,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Card(
-                  color: Colors.black,
+                  color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -549,20 +549,17 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                         maxLength: 200,
                                         keyboardType: TextInputType.text,
                                         maxLines: 6,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           filled: true,
-                                          fillColor: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
+                                          fillColor: Colors.white,
+                                          enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color: Colors.white,
+                                              color: Colors.black,
                                             ),
                                           ),
-                                          focusedBorder:
-                                              const OutlineInputBorder(
+                                          focusedBorder: OutlineInputBorder(
                                             borderSide:
-                                                BorderSide(color: Colors.pink),
+                                                BorderSide(color: Colors.black),
                                           ),
                                         ),
                                       ),
@@ -660,6 +657,10 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                               : Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    const Text(
+                                      'Comments ',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
