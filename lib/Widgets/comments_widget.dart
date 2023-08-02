@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutor_finder/Search/tutor_profile.dart';
 
 class CommentWidget extends StatefulWidget {
   final String commentId;
@@ -34,7 +35,13 @@ class _CommentWidgetState extends State<CommentWidget> {
   Widget build(BuildContext context) {
     _colors.shuffle();
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ProfileScreen(userID: widget.commenterId)));
+      },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
