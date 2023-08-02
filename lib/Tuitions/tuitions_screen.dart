@@ -145,7 +145,7 @@ class _TuitionScreenState extends State<TuitionScreen> {
             automaticallyImplyLeading: false,
             leading: IconButton(
               icon: const Icon(
-                Icons.filter_list_rounded,
+                Icons.filter_list_alt,
                 color: Colors.black,
               ),
               onPressed: () {

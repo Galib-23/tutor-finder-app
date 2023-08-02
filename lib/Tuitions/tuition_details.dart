@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tutor_finder/Services/global_methods.dart';
 import 'package:tutor_finder/Services/global_variables.dart';
@@ -38,6 +39,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
   Timestamp? deadlineDateTimeStamp;
   String? postedDate;
   String? deadlineDate;
+  String phoneNumber = '';
   String? location = '';
   String? email = '';
   int hiredBy = 0;
@@ -70,6 +72,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
         tuitionDescription = tuitionDatabase.get('tuitionDescription');
         hiring = tuitionDatabase.get('hiring');
         email = tuitionDatabase.get('email');
+        phoneNumber = userDoc.get('phoneNumber');
         location = tuitionDatabase.get('location');
         hiredBy = tuitionDatabase.get('hiredBy');
         postedDateTimeStamp = tuitionDatabase.get('createdAt');
@@ -126,6 +129,48 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
       'hiredBy': hiredBy + 1,
     });
     Navigator.pop(context);
+  }
+
+  Widget _contactBy(
+      {required Color color, required Function fct, required IconData icon}) {
+    return CircleAvatar(
+      backgroundColor: color,
+      radius: 25,
+      child: CircleAvatar(
+        radius: 23,
+        backgroundColor: Colors.white,
+        child: IconButton(
+          icon: Icon(
+            icon,
+            color: color,
+          ),
+          onPressed: () {
+            fct();
+          },
+        ),
+      ),
+    );
+  }
+
+  void _openWhatsAppChat() async {
+    var url = 'https://wa.me/$phoneNumber?text=HelloWorld';
+    launchUrlString(url);
+  }
+
+  void _mailTo() async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: email,
+      query:
+          'subject=Write subject here, Please&body=Hello, please write details',
+    );
+    final url = params.toString();
+    launchUrlString(url);
+  }
+
+  void _callPhoneNumber() async {
+    var url = 'tel://$phoneNumber';
+    launchUrlString(url);
   }
 
   @override
@@ -517,6 +562,39 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                           ],
                         ),
                         dividerWidget(),
+                        FirebaseAuth.instance.currentUser!.uid ==
+                                widget.uploadedBy
+                            ? Container()
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  _contactBy(
+                                    color: Colors.green,
+                                    fct: () {
+                                      _openWhatsAppChat();
+                                    },
+                                    icon: FontAwesome.whatsapp,
+                                  ),
+                                  _contactBy(
+                                    color: Colors.red,
+                                    fct: () {
+                                      _mailTo();
+                                    },
+                                    icon: Icons.mail_outline,
+                                  ),
+                                  _contactBy(
+                                    color: Colors.purple,
+                                    fct: () {
+                                      _callPhoneNumber();
+                                    },
+                                    icon: Icons.call,
+                                  ),
+                                ],
+                              ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                       ],
                     ),
                   ),
