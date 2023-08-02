@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tutor_finder/Services/global_methods.dart';
 import 'package:tutor_finder/Services/global_variables.dart';
 import 'package:tutor_finder/Tuitions/tuitions_screen.dart';
+import 'package:tutor_finder/Widgets/comments_widget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:uuid/uuid.dart';
 
@@ -677,7 +678,7 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          showComment = false;
+                                          showComment = true;
                                         });
                                       },
                                       icon: const Icon(
@@ -689,6 +690,64 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                                   ],
                                 ),
                         ),
+                        showComment == false
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: FutureBuilder<DocumentSnapshot>(
+                                  future: FirebaseFirestore.instance
+                                      .collection('tuitions')
+                                      .doc(widget.tuitionId)
+                                      .get(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else {
+                                      if (snapshot.data == null) {
+                                        const Center(
+                                          child: Text(
+                                              'No Comments For this Tuition'),
+                                        );
+                                      }
+                                    }
+                                    return ListView.separated(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return CommentWidget(
+                                          commentId:
+                                              snapshot.data!['tuitionComments']
+                                                  [index]['commentId'],
+                                          commenterId:
+                                              snapshot.data!['tuitionComments']
+                                                  [index]['userId'],
+                                          commenterName:
+                                              snapshot.data!['tuitionComments']
+                                                  [index]['name'],
+                                          commentBody:
+                                              snapshot.data!['tuitionComments']
+                                                  [index]['commentBody'],
+                                          commenterImageUrl:
+                                              snapshot.data!['tuitionComments']
+                                                  [index]['userImageUrl'],
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return const Divider(
+                                          thickness: 1,
+                                          color: Colors.grey,
+                                        );
+                                      },
+                                      itemCount: snapshot
+                                          .data!['tuitionComments'].length,
+                                    );
+                                  },
+                                ),
+                              ),
                       ],
                     ),
                   ),
