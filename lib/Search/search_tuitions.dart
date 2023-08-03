@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutor_finder/Tuitions/tuitions_screen.dart';
 import 'package:tutor_finder/Widgets/bottom_nav_bar.dart';
 
 class AllStudentsScreen extends StatefulWidget {
@@ -27,8 +28,6 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
         ),
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('AllStudentsScreen'),
-          centerTitle: true,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -40,6 +39,16 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
                 end: Alignment.centerRight,
                 stops: [0.2, 0.9],
               ),
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => TuitionScreen()));
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
             ),
           ),
         ),
