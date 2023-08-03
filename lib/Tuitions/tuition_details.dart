@@ -440,9 +440,9 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                               ),
                         dividerWidget(),
                         const Text(
-                          'Tuition Description',
+                          'Qualifications',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 22,
                             color: Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.bold,
                           ),
@@ -454,12 +454,12 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                           tuitionDescription == null ? '' : tuitionDescription!,
                           textAlign: TextAlign.justify,
                           style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 63, 62, 62),
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         //dividerWidget(),
                       ],

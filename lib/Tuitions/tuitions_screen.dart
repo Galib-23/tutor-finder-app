@@ -23,7 +23,7 @@ class _TuitionScreenState extends State<TuitionScreen> {
           return AlertDialog(
             backgroundColor: Colors.black54,
             title: const Text(
-              'Tuition Category',
+              'Filter Districts',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,

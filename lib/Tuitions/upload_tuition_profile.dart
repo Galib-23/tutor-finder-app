@@ -16,12 +16,12 @@ class UploadTuitionProfile extends StatefulWidget {
 
 class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
   final TextEditingController _tuitionCategoryController =
-      TextEditingController(text: 'Select Tuition Category');
+      TextEditingController(text: 'Select your district');
   final TextEditingController _tuitionTitleController = TextEditingController();
   final TextEditingController _tuitionDescriptionController =
       TextEditingController();
   final TextEditingController _tuitionAvailabilityController =
-      TextEditingController(text: 'Tuition Availability');
+      TextEditingController(text: 'Choose Tuition Availability');
   final _formKey = GlobalKey<FormState>();
 
   DateTime? picked;
@@ -105,7 +105,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
           return AlertDialog(
             backgroundColor: Colors.black54,
             title: const Text(
-              'Tuition Category',
+              'Your District :',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
@@ -193,7 +193,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
     if (isValid) {
       if (_tuitionAvailabilityController.text ==
               'Choose Tuition Availability' ||
-          _tuitionCategoryController.text == 'Choose Tuition Category') {
+          _tuitionCategoryController.text == 'Select your district') {
         GlobalMethod.showErrorDialog(
             error: 'Please Pick Everything', ctx: context);
         return;
@@ -308,7 +308,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _textTitles(label: 'Tuition Category : '),
+                            _textTitles(label: 'Select Your District : '),
                             _textFormFields(
                               valueKey: 'TuitionCategory',
                               controller: _tuitionCategoryController,
@@ -326,7 +326,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                               fct: () {},
                               maxLength: 100,
                             ),
-                            _textTitles(label: "Tuition Description"),
+                            _textTitles(label: "Your Qualification :"),
                             _textFormFields(
                               valueKey: 'TuitionDescription',
                               controller: _tuitionDescriptionController,
