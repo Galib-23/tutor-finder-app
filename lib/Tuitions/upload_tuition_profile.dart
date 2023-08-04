@@ -273,7 +273,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
-              color: const Color.fromARGB(255, 159, 201, 255),
+              color: Colors.white,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,7 +326,9 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                               fct: () {},
                               maxLength: 100,
                             ),
-                            _textTitles(label: "Your Qualification :"),
+                            _textTitles(
+                                label:
+                                    "Your Qualifications (Current Institution*) :"),
                             _textFormFields(
                               valueKey: 'TuitionDescription',
                               controller: _tuitionDescriptionController,
@@ -358,7 +360,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                                 onPressed: () {
                                   _uploadTuition();
                                 },
-                                color: const Color.fromARGB(255, 46, 59, 243),
+                                color: const Color.fromARGB(255, 48, 124, 223),
                                 elevation: 8,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13),

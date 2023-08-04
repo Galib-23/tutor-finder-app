@@ -97,7 +97,7 @@ class BottomNavigationBarForApp extends StatelessWidget {
             color: Colors.black,
           ),
           Icon(
-            Icons.search,
+            Icons.contact_page_outlined,
             size: 19,
             color: Colors.black,
           ),
