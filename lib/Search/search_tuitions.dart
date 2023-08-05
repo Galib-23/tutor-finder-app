@@ -137,13 +137,15 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 36),
-                  const Text(
-                    'HOW BE A DELUXE TUTOR',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 230, 0),
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold),
+                  const SizedBox(height: 46),
+                  const Center(
+                    child: Text(
+                      'HOW BE A DELUXE TUTOR?',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 230, 0),
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   const Text(

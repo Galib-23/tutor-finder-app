@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
           CachedNetworkImage(
             imageUrl: signupUrlImage,
             placeholder: (context, url) => Image.asset(
-              'assets/images/wallpaper.jpg',
+              'assets/images/wallpaper.png',
               fit: BoxFit.fill,
             ),
             errorWidget: (context, url, error) => const Icon(Icons.error),

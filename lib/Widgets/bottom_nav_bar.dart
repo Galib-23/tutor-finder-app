@@ -86,9 +86,9 @@ class BottomNavigationBarForApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
         height: 50,
-        color: const Color.fromARGB(255, 60, 122, 236),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        buttonBackgroundColor: const Color.fromARGB(255, 60, 122, 236),
+        color: const Color.fromARGB(255, 57, 128, 250),
+        backgroundColor: const Color.fromARGB(255, 101, 255, 255),
+        buttonBackgroundColor: const Color.fromARGB(255, 57, 128, 250),
         index: indexNum,
         items: const [
           Icon(
