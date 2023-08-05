@@ -29,31 +29,31 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
           indexNum: 1,
         ),
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 101, 255, 255),
-                  Color.fromARGB(255, 57, 128, 250)
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                stops: [0.2, 0.9],
-              ),
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => TuitionScreen()));
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-          ),
-        ),
+        // appBar: AppBar(
+        //   flexibleSpace: Container(
+        //     decoration: const BoxDecoration(
+        //       gradient: LinearGradient(
+        //         colors: [
+        //           Color.fromARGB(255, 101, 255, 255),
+        //           Color.fromARGB(255, 57, 128, 250)
+        //         ],
+        //         begin: Alignment.centerLeft,
+        //         end: Alignment.centerRight,
+        //         stops: [0.2, 0.9],
+        //       ),
+        //     ),
+        //   ),
+        //   leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.pushReplacement(context,
+        //           MaterialPageRoute(builder: (context) => TuitionScreen()));
+        //     },
+        //     icon: const Icon(
+        //       Icons.arrow_back,
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
