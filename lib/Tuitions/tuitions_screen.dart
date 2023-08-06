@@ -129,6 +129,15 @@ class _TuitionScreenState extends State<TuitionScreen> {
           ),
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            title: Center(
+              child: Text(
+                'Edu Mingle',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(

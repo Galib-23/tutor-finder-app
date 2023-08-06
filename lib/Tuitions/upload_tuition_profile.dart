@@ -231,7 +231,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
         _tuitionTitleController.clear();
         _tuitionDescriptionController.clear();
         setState(() {
-          _tuitionCategoryController.text = 'Choose Tuition Category';
+          _tuitionCategoryController.text = 'Select Your District';
           _tuitionAvailabilityController.text = 'Choose An Availability period';
         });
       } catch (error) {
@@ -334,7 +334,7 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                               controller: _tuitionDescriptionController,
                               enabled: true,
                               fct: () {},
-                              maxLength: 100,
+                              maxLength: 850,
                             ),
                             _textTitles(
                                 label: "Approximate Availability(Upto)"),
