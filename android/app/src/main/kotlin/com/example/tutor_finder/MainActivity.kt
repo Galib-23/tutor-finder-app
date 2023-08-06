@@ -1,4 +1,4 @@
-package com.example.tutor_finder
+package com.aasadullahg.edumingle
 
 import io.flutter.embedding.android.FlutterActivity
 

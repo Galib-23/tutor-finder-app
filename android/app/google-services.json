@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:433901050966:android:b268739f45b53c4a03eff7",
+        "android_client_info": {
+          "package_name": "com.aasadullahg.edumingle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433901050966-qga5m9vgvetuv47hc6e2scfsrmfsobbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApDZ8XqSsNXn48sAnBtlogTaxbQaaDuxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433901050966-qga5m9vgvetuv47hc6e2scfsrmfsobbg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:433901050966:android:5b3c642f0af3125503eff7",
         "android_client_info": {
           "package_name": "com.example.tutor_finder"
