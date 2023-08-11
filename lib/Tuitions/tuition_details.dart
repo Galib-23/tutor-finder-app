@@ -561,37 +561,37 @@ class _TuitionDetailsScreenState extends State<TuitionDetailsScreen> {
                             ),
                           ],
                         ),
-                        dividerWidget(),
-                        FirebaseAuth.instance.currentUser!.uid ==
-                                widget.uploadedBy
-                            ? Container()
-                            : Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  _contactBy(
-                                    color: Colors.green,
-                                    fct: () {
-                                      _openWhatsAppChat();
-                                    },
-                                    icon: FontAwesome.whatsapp,
-                                  ),
-                                  _contactBy(
-                                    color: Colors.red,
-                                    fct: () {
-                                      _mailTo();
-                                    },
-                                    icon: Icons.mail_outline,
-                                  ),
-                                  _contactBy(
-                                    color: Colors.purple,
-                                    fct: () {
-                                      _callPhoneNumber();
-                                    },
-                                    icon: Icons.call,
-                                  ),
-                                ],
-                              ),
+                        // dividerWidget(),
+                        // FirebaseAuth.instance.currentUser!.uid ==
+                        //         widget.uploadedBy
+                        //     ? Container()
+                        //     : Row(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceAround,
+                        //         children: [
+                        //           _contactBy(
+                        //             color: Colors.green,
+                        //             fct: () {
+                        //               _openWhatsAppChat();
+                        //             },
+                        //             icon: FontAwesome.whatsapp,
+                        //           ),
+                        //           _contactBy(
+                        //             color: Colors.red,
+                        //             fct: () {
+                        //               _mailTo();
+                        //             },
+                        //             icon: Icons.mail_outline,
+                        //           ),
+                        //           _contactBy(
+                        //             color: Colors.purple,
+                        //             fct: () {
+                        //               _callPhoneNumber();
+                        //             },
+                        //             icon: Icons.call,
+                        //           ),
+                        //         ],
+                        //       ),
                         const SizedBox(
                           height: 15,
                         ),

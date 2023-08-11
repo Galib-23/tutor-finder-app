@@ -318,7 +318,8 @@ class _UploadTuitionProfileState extends State<UploadTuitionProfile> {
                               },
                               maxLength: 100,
                             ),
-                            _textTitles(label: "Subject/Sujects"),
+                            _textTitles(
+                                label: "Subject/Sujects(mention class also)"),
                             _textFormFields(
                               valueKey: 'Subject',
                               controller: _tuitionTitleController,

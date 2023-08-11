@@ -114,26 +114,22 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
                       CardItem(
                         icon: Icons.star,
                         title: 'Influence',
-                        text:
-                            'You have a larger platform to share your knowledge and expertise',
+                        text: 'Have greater Influence',
                       ),
                       CardItem(
                         icon: Icons.money_off_csred_outlined,
                         title: 'Salary',
-                        text:
-                            'These endeavors can lead to additional income streams beyond regular teaching',
+                        text: 'Can Bring Additional Salary',
                       ),
                       CardItem(
                         icon: Icons.thumb_up,
                         title: 'Recognition',
-                        text:
-                            'Can Bring a sense of recognition for your hard work and dedication to education',
+                        text: 'More Public Recognition',
                       ),
                       CardItem(
                         icon: Icons.home_max_rounded,
                         title: 'Career',
-                        text:
-                            'can open doors to various career opportunities and positions in educational institutions',
+                        text: 'Vast amount Scopes',
                       ),
                     ],
                   ),

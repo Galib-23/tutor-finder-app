@@ -235,13 +235,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          _contactBy(
-                                            color: Colors.green,
-                                            fct: () {
-                                              _openWhatsAppChat();
-                                            },
-                                            icon: FontAwesome.whatsapp,
-                                          ),
+                                          // _contactBy(
+                                          //   color: Colors.green,
+                                          //   fct: () {
+                                          //     _openWhatsAppChat();
+                                          //   },
+                                          //   icon: FontAwesome.whatsapp,
+                                          // ),
                                           _contactBy(
                                             color: Colors.red,
                                             fct: () {
@@ -249,13 +249,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             },
                                             icon: Icons.mail_outline,
                                           ),
-                                          _contactBy(
-                                            color: Colors.purple,
-                                            fct: () {
-                                              _callPhoneNumber();
-                                            },
-                                            icon: Icons.call,
-                                          ),
+                                          // _contactBy(
+                                          //   color: Colors.purple,
+                                          //   fct: () {
+                                          //     _callPhoneNumber();
+                                          //   },
+                                          //   icon: Icons.call,
+                                          // ),
                                         ],
                                       ),
                                 const SizedBox(
