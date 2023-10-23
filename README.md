@@ -1,4 +1,5 @@
 # Edu Mingle - Find Nearby Tutors
+![Profile Banner](https://play-lh.googleusercontent.com/jC90XiiIWBxl7V7ahxVFswuUvsipwQT1Xnm3wnzX3eFR_-6z1fhTgDspC-nlySbqaQ=w240-h480-rw)
 
 Edu Mingle is a user-friendly mobile application designed to help students and parents find nearby qualified tutors quickly and easily. Whether you need help with math, science, language, or any other subject, Edu Mingle connects you with local tutors who can provide the assistance you need.
 
