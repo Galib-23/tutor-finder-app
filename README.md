@@ -47,4 +47,4 @@ Download the app now . [Go to Play Store](https://play.google.com/store/apps/det
 
 ---
 
-*Note: This README is a template and should be customized to reflect the specific details, installation instructions, and other information relevant to your Edu Mingle app.*
+
